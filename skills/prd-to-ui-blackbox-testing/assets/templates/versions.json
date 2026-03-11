@@ -1,0 +1,11 @@
+{
+  "case_version": "v1",
+  "script_version": "v1",
+  "based_on": {
+    "requirements": "requirements-analysis.md",
+    "risk": "risk-assessment.md",
+    "exploration": "exploration-log.md"
+  },
+  "status": "draft",
+  "notes": ""
+}
