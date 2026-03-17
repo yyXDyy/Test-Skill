@@ -1,0 +1,11 @@
+{
+  "scope": {
+    "product": "product-name"
+  },
+  "shared_context_version": "v1",
+  "based_on": {
+    "product_module_scope": "product-module-scope.md"
+  },
+  "status": "draft",
+  "notes": ""
+}

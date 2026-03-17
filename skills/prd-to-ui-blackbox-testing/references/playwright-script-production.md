@@ -15,6 +15,9 @@ Do not write the script from memory alone. Use these inputs explicitly:
 - `requirements-analysis.md`
 - `risk-assessment.md`
 - `exploration-log.md`
+- `spec-for-testing.md`
+- `test-model.md`
+- `confirmation-status.md`
 - the selected case pack version
 
 If one of these inputs is missing, say so and stop or ask for clarification.
@@ -26,9 +29,12 @@ If one of these inputs is missing, say so and stop or ask for clarification.
 Script production should:
 - convert observed UI behavior into executable black-box steps
 - preserve traceability back to requirements and perception
+- preserve the business object -> action -> result -> observation chain from the case layer
 - use stable locator and waiting practices
 - avoid guessing when the UI is still ambiguous
 - produce versioned script output
+- make each scripted test easy to map back to case IDs and AC IDs
+- make it obvious which actions are read-only, which are data-creating, and which are destructive
 
 Script production should not:
 - replace missing perception with invented selectors
@@ -44,6 +50,10 @@ Follow this order:
 1. read the selected requirement/risk/perception artifacts
 2. select the target cases for scripting
 3. convert each case into:
+   - target business object
+   - triggering action
+   - expected business result
+   - primary observation point
    - preconditions
    - navigation steps
    - action steps
@@ -96,6 +106,7 @@ Avoid:
 - weak assertions that only check that the page did not crash
 
 If the script depends on a state transition, assert the state transition explicitly.
+If the case defines a primary observation point, make that observation point visible in the script assertion strategy rather than silently replacing it with a weaker check.
 
 ---
 
@@ -117,10 +128,16 @@ Chrome MCP exploration can discover facts, but the script should still validate 
 
 Each generated script should clearly show:
 - scenario goal
+- target business object
+- expected business result
 - preconditions or setup assumptions
 - action sequence
 - assertions
+- primary observation point used
 - any known fragile point
+- case IDs covered by that test
+- AC IDs covered by that test
+- whether the test is non-destructive, controlled-write, or destructive
 
 At minimum, keep the script understandable enough that a QA engineer can review it quickly.
 
@@ -128,6 +145,12 @@ If multiple cases are generated, organize them by:
 - smoke / core / edge
 or
 - feature / page / journey
+
+Prefer one of these additional supporting patterns:
+- keep a short mapping comment above each Playwright test
+- or export a sidecar execution manifest that lists the mapping in markdown
+
+The user should never be left with only `N passed` and no clear explanation of what those `N` tests covered.
 
 ---
 
@@ -168,6 +191,7 @@ Use Chrome MCP outputs to answer questions like:
 - what label does the button actually use?
 - what visible state appears after the action?
 - what controls exist on the real page?
+- what object relationship or state evidence is actually observable in the UI?
 
 Then write the script in Playwright.
 
@@ -177,10 +201,13 @@ Then write the script in Playwright.
 
 For MVP, a script is considered acceptable for delivery when:
 - it maps back to a defined case
+- it preserves the important business-result assertion, not only a weaker UI existence check
 - it uses supported locator and waiting practices
 - it has at least one clear user-visible assertion per important step
 - known limitations are stated
 - version metadata is updated
+- the executed test list is understandable by a human who does not read Playwright fluently
+- the coverage boundary is explicit: full coverage vs prioritized subset
 
 ---
 

@@ -1,0 +1,66 @@
+{
+  "skill_name": "prd-to-ui-blackbox-testing",
+  "evals": [
+    {
+      "id": 0,
+      "name": "pdf-admin-image-proxy-config",
+      "prompt": "请基于 PDF PRD `私有化-Admin 镜像代理配置.pdf` 为 sealos 的 Admin 模块设计黑盒 UI 自动化测试方案和脚本。测试环境为 `https://admin.example.test`，测试账号为 `admin_tester / ********`。本轮只做 Admin 模块，不考虑其他模块。请按 skill 的完整流程产出理解、感知、case、coverage audit、execution manifest 和脚本。这个需求涉及资源管理下新增“镜像代理配置”tab，支持新增代理配置、私有镜像认证开关与条件字段、Host 地址多条录入、仅 push / 跳过证书验证选项，以及保存后的浏览、编辑、删除能力。",
+      "expected_output": "应识别产品为 sealos、模块为 Admin，从 PDF 中抽出“资源管理 > 镜像代理配置”相关流程和 AC，建立对象与业务结果模型，并覆盖新增、条件字段、保存后浏览、编辑、删除这些核心路径。",
+      "files": [
+        "私有化-Admin 镜像代理配置.pdf"
+      ],
+      "checks": [
+        "是否使用 PDF 作为需求输入并正确抽取模块范围为 Admin",
+        "是否创建 product-module-scope.md 并锁定 Admin 模块",
+        "是否把新增代理配置、条件字段、Host 多条、编辑、删除拆成可测 AC",
+        "是否在 case/script 中体现条件字段与保存后浏览状态验证",
+        "是否把删除二次确认纳入 case 或 deferred scope 说明"
+      ]
+    },
+    {
+      "id": 1,
+      "name": "single-module-prd-clear-scope",
+      "prompt": "请基于 PRD 为 sealos 的 Admin 模块生成一套黑盒 UI 自动化测试方案和脚本。PRD 文件在 `docs/prd/sealos-admin.md`，测试环境是 `https://admin.example.test`，测试账号是 `admin_tester / ********`。这次只做 Admin 模块，不考虑其他模块。请按 skill 的完整流程输出运行产物。",
+      "expected_output": "应明确识别产品为 sealos，模块为 Admin，产出 `product-module-scope.md`、模块级理解产物、感知产物、case pack、coverage audit、execution manifest 和脚本；不应因为模块范围模糊而停住。",
+      "files": [
+        "docs/prd/sealos-admin.md"
+      ],
+      "checks": [
+        "是否创建 product-module-scope.md 并锁定模块为 Admin",
+        "是否跳过不必要的产品级 shared context",
+        "是否按理解 -> perception -> generation -> iteration 顺序推进",
+        "是否在 case/script 中保留对象 -> 动作 -> 结果 -> 观察点链路"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "multi-module-with-shared-rules",
+      "prompt": "请基于 PRD 为 sealos 产品设计黑盒 UI 自动化测试。PRD 文件在 `docs/prd/sealos-billing-and-workspace.md`，它涉及 Admin 和 AppLaunchpad 两个模块，并且共享工作区、权限、费用计算规则。测试环境是 `https://sealos.example.test`，账号是 `owner_tester / ********`。本轮目标模块是 Admin，但需要把跨模块共享规则纳入设计。",
+      "expected_output": "应识别 sealos 为产品，识别 Admin 与 AppLaunchpad 为候选模块，锁定 Admin 为本轮模块，同时创建 `product-shared-context.md` 和 `shared-versions.json`，并把费用/权限/共享组件纳入产品级共用知识。",
+      "files": [
+        "docs/prd/sealos-billing-and-workspace.md"
+      ],
+      "checks": [
+        "是否创建 product-module-scope.md 并列出多个候选模块",
+        "是否创建 product-shared-context.md",
+        "是否把费用计算、共享组件、权限规则写入产品级共用知识",
+        "模块级产物是否引用 product shared context"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "multi-module-ambiguous-needs-user-confirmation",
+      "prompt": "我有一个 sealos 的 PRD，文件在 `docs/prd/sealos-platform-overview.md`。请帮我做 UI 黑盒自动化方案。环境地址是 `https://platform.example.test`，账号是 `pm_tester / ********`。PRD 里既讲了工作区，也讲了应用启动，还讲了镜像仓库，但我现在没有明确说要测哪个模块。",
+      "expected_output": "应先识别产品为 sealos，并从 PRD 提取多个候选模块；由于模块边界不清，应主动追问用户当前目标模块，而不是直接进入 perception 或脚本生成。",
+      "files": [
+        "docs/prd/sealos-platform-overview.md"
+      ],
+      "checks": [
+        "是否先问清产品/模块范围",
+        "是否创建 product-module-scope.md 并标记模块不明确",
+        "是否在模块未确认前停止进入 perception",
+        "是否把未确认模块范围记录到 confirmation-status 或 scope 产物"
+      ]
+    }
+  ]
+}

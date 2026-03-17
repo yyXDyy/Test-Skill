@@ -13,6 +13,7 @@ That means:
 - use it to reduce ambiguity before script writing
 - use it to verify whether script failures come from incorrect UI understanding
 - do not treat raw exploration output as the final test script deliverable
+- use it to gather evidence that can update or validate the understanding-layer product model
 
 ---
 
@@ -26,6 +27,7 @@ Use Chrome MCP to:
 - inspect routes, pages, dialogs, forms, and visible state
 - verify whether PRD expectations match what exists in the environment
 - collect browser-native evidence that the AI can reason about
+- validate terminology, object relationships, and success evidence used later in case design
 
 ### B. Iteration stage indicates possible understanding error
 Use Chrome MCP to confirm whether a failure came from:
@@ -117,6 +119,8 @@ Good perception outputs include:
 - state transitions after key actions
 - mismatches between PRD wording and real UI wording
 - discovered ambiguity that will affect case assembly or scripting
+- evidence that confirms or weakens the current object model
+- evidence that shows whether a business-result claim has strong or weak UI proof
 
 Bad perception outputs include:
 - inferred backend behavior without evidence
@@ -183,6 +187,8 @@ Record at minimum:
 - observed UI facts
 - interactions performed
 - mismatch against PRD, if any
+- mismatch against current understanding artifacts, if any
+- understanding gaps reduced or still open
 - artifact refs captured
 
 If no log entry was made, the perception work is incomplete.

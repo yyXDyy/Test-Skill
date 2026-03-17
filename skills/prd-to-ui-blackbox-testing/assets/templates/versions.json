@@ -1,7 +1,12 @@
 {
+  "scope": {
+    "product": "product-name",
+    "module": "module-name"
+  },
   "case_version": "v1",
   "script_version": "v1",
   "based_on": {
+    "product_shared": "../product-shared-context.md",
     "requirements": "requirements-analysis.md",
     "risk": "risk-assessment.md",
     "exploration": "exploration-log.md"
